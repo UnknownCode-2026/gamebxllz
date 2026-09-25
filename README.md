@@ -52,3 +52,5 @@ npm start
 Repository: https://github.com/UnknownCode-2026/gamebxllz
 
 สำหรับ Vercel ให้เชื่อม repository นี้และใช้ branch `main` เป็น production.
+
+Git integration verified for Portfolio V2 automatic production deployments.
