@@ -1,10 +1,95 @@
 'use client';
 import { useRef, useState } from 'react';
-import Image from 'next/image';
 import { projects, type Project } from '@/data/portfolio';
-export default function Projects(){
- const [filter,setFilter]=useState('ทั้งหมด'); const [selected,setSelected]=useState<Project|null>(null); const dialog=useRef<HTMLDialogElement>(null);
- const categories=['ทั้งหมด',...new Set(projects.map(p=>p.category))];
- function show(p:Project){setSelected(p);dialog.current?.showModal();}
- return <><div className="filters" aria-label="กรองประเภทผลงาน">{categories.map(c=><button key={c} aria-pressed={filter===c} onClick={()=>setFilter(c)}>{c}</button>)}</div>{projects.length===0?<div className="empty-project"><div className="empty-symbol" aria-hidden="true">{'{ }'}</div><div><span className="eyebrow">THE NEXT CHAPTER</span><h3>พื้นที่สำหรับสิ่งที่ตั้งใจสร้าง</h3><p>กำลังเตรียมรวบรวมรายละเอียดผลงาน<br/>ระหว่างนี้ พูดคุยเกี่ยวกับโปรเจกต์ได้ทาง Facebook</p><a className="text-link" href="#contact">เริ่มต้นบทสนทนา <span>↗</span></a></div><span className="empty-index" aria-hidden="true">01—</span></div>:<div className="project-grid">{projects.filter(p=>filter==='ทั้งหมด'||p.category===filter).map(p=><article key={p.id} className="project-card">{p.image&&<Image src={p.image} alt={`ภาพผลงาน ${p.title}`} width={960} height={600} sizes="(max-width: 700px) 100vw, 50vw"/>}<span className="eyebrow">{p.category}</span><h3>{p.title}</h3><p>{p.summary}</p><div className="tags">{p.technologies.map(t=><span key={t}>{t}</span>)}</div><button className="text-link" onClick={()=>show(p)}>ดูรายละเอียด ↗</button></article>)}</div>}<dialog ref={dialog} className="project-dialog" aria-labelledby="project-title" onClick={e=>{if(e.target===e.currentTarget)dialog.current?.close()}}><button className="dialog-close" autoFocus onClick={()=>dialog.current?.close()} aria-label="ปิดรายละเอียด">✕</button>{selected&&<><span className="eyebrow">{selected.category}</span><h2 id="project-title">{selected.title}</h2><p>{selected.description}</p><h3>หน้าที่รับผิดชอบ</h3><p>{selected.role}</p><div className="tags">{selected.technologies.map(t=><span key={t}>{t}</span>)}</div><div className="actions">{selected.url&&<a className="button primary" href={selected.url} target="_blank" rel="noopener noreferrer">ดูเว็บไซต์ ↗</a>}{selected.source&&<a className="button secondary" href={selected.source} target="_blank" rel="noopener noreferrer">Source Code ↗</a>}</div></>}</dialog></>;
+
+export default function Projects() {
+  const [filter, setFilter] = useState('ทั้งหมด');
+  const [selected, setSelected] = useState<Project | null>(null);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const categories = ['ทั้งหมด', ...new Set(projects.map((p) => p.category))];
+
+  function show(project: Project) {
+    setSelected(project);
+    dialog.current?.showModal();
+  }
+
+  return (
+    <>
+      <div className="filters" aria-label="กรองประเภทผลงาน">
+        {categories.map((category) => (
+          <button
+            key={category}
+            aria-pressed={filter === category}
+            onClick={() => setFilter(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <div className="project-grid">
+        {projects
+          .filter((project) => filter === 'ทั้งหมด' || project.category === filter)
+          .map((project, index) => (
+            <article key={project.id} className="project-card">
+              <div className="project-card-top">
+                <span className="project-number">0{index + 1}</span>
+                <span className="project-status"><i />{project.status ?? 'PROJECT'}</span>
+              </div>
+              <div className="project-visual" aria-hidden="true">
+                <span>{project.title.slice(0, 2).toUpperCase()}</span>
+                <small>{project.category}</small>
+              </div>
+              <span className="eyebrow">{project.category}</span>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <div className="tags">
+                {project.technologies.map((technology) => <span key={technology}>{technology}</span>)}
+              </div>
+              <div className="project-links">
+                <button className="text-link" onClick={() => show(project)}>ดูรายละเอียด ↗</button>
+                {project.source && (
+                  <a className="source-link" href={project.source} target="_blank" rel="noopener noreferrer">
+                    GitHub ↗
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+      </div>
+
+      <dialog
+        ref={dialog}
+        className="project-dialog"
+        aria-labelledby="project-title"
+        onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}
+        onCancel={() => dialog.current?.close()}
+      >
+        <button className="dialog-close" autoFocus onClick={() => dialog.current?.close()} aria-label="ปิดรายละเอียด">✕</button>
+        {selected && (
+          <>
+            <div className="dialog-meta">
+              <span className="eyebrow">{selected.category}</span>
+              <span className="project-status"><i />{selected.status ?? 'PROJECT'}</span>
+            </div>
+            <h2 id="project-title">{selected.title}</h2>
+            <p>{selected.description}</p>
+            <h3>สิ่งที่พัฒนา</h3>
+            <p>{selected.role}</p>
+            <div className="tags">
+              {selected.technologies.map((technology) => <span key={technology}>{technology}</span>)}
+            </div>
+            <div className="actions">
+              {selected.url && (
+                <a className="button primary" href={selected.url} target="_blank" rel="noopener noreferrer">ดูเว็บไซต์ ↗</a>
+              )}
+              {selected.source && (
+                <a className="button secondary" href={selected.source} target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+              )}
+            </div>
+          </>
+        )}
+      </dialog>
+    </>
+  );
 }

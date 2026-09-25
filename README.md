@@ -1,9 +1,31 @@
-# Anuthit Kalachak — Portfolio V1
+# Anuthit Kalachak — Portfolio V2
 
-Next.js App Router + TypeScript + Tailwind CSS. Thai-first, responsive dark/blue developer portfolio.
+Portfolio ส่วนตัวเวอร์ชัน 2 พัฒนาด้วย Next.js App Router + TypeScript + Tailwind CSS และออกแบบแบบ Thai-first / responsive.
+
+## V2 highlights
+
+- Hero ใหม่พร้อม availability badge และ Portfolio V2 identity card
+- Portfolio summary / stats
+- เพิ่ม Skills & Toolbox ที่ใช้งานจริง
+- เพิ่มผลงานจริงจาก GitHub: Nexus Store, MindPlay และ SiamPlay
+- Project filter + Project detail dialog + Source Code links
+- เพิ่ม Journey section
+- ปรับ Services และ development process
+- Contact section พร้อม GitHub + Facebook
+- ปรับ UI dark/blue, glow, cards, hover interactions และ mobile polish
+- SEO metadata, canonical URL, sitemap.xml และ robots.txt
+- รองรับ prefers-reduced-motion
+
+## Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Vercel
 
 ## Run
-Node.js 22+ recommended.
+
 ```sh
 npm install
 npm run dev
@@ -11,13 +33,22 @@ npm run build
 npm start
 ```
 
-## Edit content
-Edit `data/portfolio.ts` to change the name, biography, Facebook URL, services, verified skills and projects. Skills and projects are intentionally empty until real information is supplied. The toolbox labels the technology used by this website, not personal skill claims. No fictional experience, clients or testimonials are shown.
+## Edit portfolio content
 
-Add project objects with `id`, `title`, `category`, `summary`, `description`, `role`, `technologies`; optional `image` (local path under public), `url`, `source`. Categories populate automatically. The project dialog supports Escape, native focus trapping and focus restoration. Place images under `public/images`. If remote images are used, explicitly configure allowed remote image hosts in next.config.ts.
+ข้อมูลหลักอยู่ใน `data/portfolio.ts`:
 
-## Vercel
-Import `UnknownCode-2026/gamebxllz`, select Next.js, root directory `./`, build command `npm run build`, default output. No database, secrets or API keys required. Connecting GitHub enables subsequent push-triggered deployments. Connector file-upload deployments do not themselves guarantee a Git integration.
+- profile / social links
+- skills
+- projects
+- services
+- journey
 
-## Scope
-Responsive navigation, hero, about, toolbox, project filtering/detail dialog, service discussions, workflow, Facebook/GitHub links, metadata, favicon and reduced-motion support. No contact form, fabricated projects, authentication, payment system or admin panel.
+เพิ่มผลงานใหม่ผ่าน `projects` โดยระบุ title, category, summary, description, role, technologies และ source/url ตามต้องการ.
+
+## Deployment
+
+เว็บไซต์ production: https://gamebxllz.vercel.app
+
+Repository: https://github.com/UnknownCode-2026/gamebxllz
+
+สำหรับ Vercel ให้เชื่อม repository นี้และใช้ branch `main` เป็น production.
